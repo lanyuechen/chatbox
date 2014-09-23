@@ -19,5 +19,10 @@ return array (
 		'expire' => 86400
 	),
 
+	// baidu
+	'bd_api_key' => 'nxCBGTFvfqlXP0DIxxUu4aUQ',
+	'bd_secret_key' => 'uHsz1vQscFNqrYY7sM3HZ8Lj49nI4yCm',
+	'bd_deploy_status' => 1,
+
 );
 ?>
