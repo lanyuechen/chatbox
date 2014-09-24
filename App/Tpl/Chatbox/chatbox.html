@@ -7,6 +7,7 @@
 	<title>ChatBox</title>
 	<link rel="stylesheet" href="/Public/bootstrap/css/bootstrap.css" />
 	<!-- <link rel="stylesheet" href="/Public/bootstrap/css/theme.css"> -->
+	<link rel="stylesheet" href="/Public/perfect_scrollbar/perfect-scrollbar.css">
 	<link rel="stylesheet" href="/Public/css/basic.css">
 	<style>
     .ng-cloak{
@@ -22,8 +23,79 @@
 	
 </head>
 <body>
-	<div>
-		chatbox
+	<div id="wrap">
+		<div class="container">
+			<div class="row">
+				header
+			</div>
+			<div class="row">
+				<div class="col-md-4 sidebar">
+					<div class="panel panel-black">
+					  <div class="panel-heading">
+					    <h3 class="panel-title">会话</h3>
+					  </div>
+					  <div class="panel-body">
+					    <div class="list-group">
+					    	<a href="###" class="list-group-item">
+					    		<img src="http://localhost:82/Uploads/20140924/542299330b7aa.jpg" alt="img">
+					    		<span>阿拉甲</span>
+					    		<span class="msg-latest">芝麻开门</span>
+					    	</a>
+					    	<a href="###" class="list-group-item">
+					    		<img src="http://localhost:82/Uploads/20140924/542299330b7aa.jpg" alt="img">
+					    		<span>阿拉乙</span>
+					    		<span class="msg-latest">阿西吧</span>
+					    	</a>
+							</div>
+					  </div>
+					  <div class="panel-footer">
+							<div class="btn-group btn-group-justified">
+							  <a href="javascript:;" class="btn btn-black">
+									<span class="glyphicon glyphicon-envelope"></span><br>
+									会话
+							  </a>
+							  <a href="javascript:;" class="btn btn-black">
+							  	<span class="glyphicon glyphicon-user"></span><br>
+									联系人
+							  </a>
+							  <a href="javascript:;" class="btn btn-black">
+							  	<span class="glyphicon glyphicon-heart"></span><br>
+							  	关心
+							  </a>
+							  <a href="javascript:;" class="btn btn-black">
+									<span class="glyphicon glyphicon-cog"></span><br>
+							  	设置
+							  </a>
+							</div>
+					  </div>
+					</div>
+				</div>
+				<div class="col-md-8 content">
+					<div class="panel panel-black">
+					  <div class="panel-heading">
+					    <h3 class="panel-title">阿拉甲</h3>
+					  </div>
+					  <div class="panel-body">
+					    hehe
+					  </div>
+					  <div class="panel-footer" style="padding:5px;">
+							<div class="input-group">
+								<div class="input-group-btn">
+							    <button class="btn btn-default" type="button">Go!</button>
+							  </div>
+							  <input type="text" class="form-control">
+							  <div class="input-group-btn">
+							    <button class="btn btn-default" type="button">Go!</button>
+							  </div>
+							</div>
+					  </div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				footer
+			</div>
+		</div>
 	</div>
 	
 	<script src="/Public/js/jquery-1.8.2.min.js"></script>
@@ -31,11 +103,17 @@
 	<script src="/Public/angular/angular-route.min.js"></script>
 	<script src="/Public/angular/json3.min.js"></script>
 	<script src="/Public/bootstrap/js/bootstrap.js"></script>
+	<script src="/Public/perfect_scrollbar/perfect-scrollbar-0.4.9.with-mousewheel.min.js"></script>
 
 	<script src="/Public/angular/controllers/controller.js"></script>
 	<script src="/Public/angular/directives/directive.js"></script>
 	<script src="/Public/angular/filters/filter.js"></script>
 	<script src="/Public/angular/app.js"></script>
+	<script>
+		$(function(){
+			$('.panel-body').perfectScrollbar();
+		});
+	</script>
 
 </body>
 </html>

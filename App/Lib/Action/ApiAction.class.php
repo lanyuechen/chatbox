@@ -11,9 +11,23 @@ class ApiAction extends Action {
 	protected $work_time_out = 416;	//	不在工作时间内
 
 	//请求加入聊天列表
+	//请求参数：group
 	public function chat_beg(){
 
 		$user = D('User')->find();
+
+		$uid = $user['_id'];
+
+		//用户已在预备列表
+		if(in_array($uid, S('pre_list'))){
+			echo json_encode($this->pre_repeat);
+			return;
+		}
+		//用户已在聊天列表
+		if(in_array($uid, S('ing_list'))){
+			echo json_encode($this->is_chating);
+			return;
+		}
 
 		$res = $this->add_pre($user, 1);
 
@@ -85,6 +99,7 @@ class ApiAction extends Action {
 		}
 
 		$user['uid'] = $user['_id'];
+		$user['state'] = 'init';
 		$user['group'] = $group;
 		$user['ad'] = time();
 		unset($user['_id']);
