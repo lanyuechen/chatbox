@@ -14,6 +14,9 @@ html, body{
 	width: 72%;
 	padding: 0;
 }
+a:focus{
+	outline: none;
+} 
 
 /*黑色主题面板*/
 .panel-black{
@@ -106,6 +109,7 @@ html, body{
 .side-nav .btn.active{
 	box-shadow: inset 0 0 10px #000;
 	color: #2289cf;
+	border-left: 1px solid #1a1a1a;
 }
 
 /*内容面板*/

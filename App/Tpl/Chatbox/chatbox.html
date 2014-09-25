@@ -1,156 +1,57 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width">
-	<title>ChatBox</title>
-	<link rel="stylesheet" href="/Public/bootstrap/css/bootstrap.css" />
-	<!-- <link rel="stylesheet" href="/Public/bootstrap/css/theme.css"> -->
-	<link rel="stylesheet" href="/Public/perfect_scrollbar/perfect-scrollbar.css">
-	<link rel="stylesheet" href="/Public/css/basic.css">
-	<style>
-    .ng-cloak{
-      display: none;
-    }
-  </style>
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-    <script src="/Public/bootstrap/js/html5shiv.min.js"></script>
-    <script src="/Public/bootstrap/js/respond.min.js"></script>
-  <![endif]-->
-	
-</head>
-<body>
+<!-- 聊天窗口 -->
 
-	<div class="container">
-		<div class="row">
-			header
-		</div>
-		<div class="row">
-			<div class="col-md-4 main-content">
-				<div class="panel panel-black panel-main">
-				  <div class="panel-heading">
-				    <h3 class="panel-title">会话</h3>
-				  </div>
-				  <div class="panel-body">
-				  	<div class="wrap">
-					    <div class="list-group user-list">
-					    	<a href="###" class="list-group-item">
-					    		<img src="http://localhost:82/Uploads/20140924/542299330b7aa.jpg" alt="img">
-					    		<span>阿拉甲</span>
-					    		<span class="msg-latest">芝麻开门</span>
-					    	</a>
-					    	<a href="###" class="list-group-item">
-					    		<img src="http://localhost:82/Uploads/20140924/542299330b7aa.jpg" alt="img">
-					    		<span>阿拉乙</span>
-					    		<span class="msg-latest">阿西吧</span>
-					    	</a>
-							</div>
-						</div>
-				  </div>
-				  <div class="panel-footer">
-						<div class="side-nav btn-group btn-group-justified">
-						  <a href="javascript:;" class="btn active">
-								<span class="glyphicon glyphicon-comment"></span><br>
-								会话
-						  </a>
-						  <a href="javascript:;" class="btn">
-						  	<span class="glyphicon glyphicon-user"></span><br>
-								联系人
-						  </a>
-						  <a href="javascript:;" class="btn">
-						  	<span class="glyphicon glyphicon-heart"></span><br>
-						  	关心
-						  </a>
-						  <a href="javascript:;" class="btn">
-								<span class="glyphicon glyphicon-cog"></span><br>
-						  	设置
-						  </a>
-						</div>
-				  </div>
-				</div>
+<div class="panel panel-black panel-content">
+  <div class="panel-heading">
+	  <a class="btn btn-black btn-black-dropdown" type="button" data-toggle="dropdown">
+	    <span class="glyphicon glyphicon-th-list"></span>&nbsp;
+	    <span class="caret"></span>
+	  </a>
+	  <div class="dropdown-menu content-menu">
+			<div class="btn-group">
+			  <a href="javascript:;" class="btn active">
+					<span class="glyphicon glyphicon-file"></span><br>
+					资料
+			  </a>
+			  <a href="javascript:;" class="btn">
+			  	<span class="glyphicon glyphicon-calendar"></span><br>
+					聊天记录
+			  </a>
+			  <a href="javascript:;" class="btn">
+			  	<span class="glyphicon glyphicon-heart"></span><br>
+			  	关心
+			  </a>
 			</div>
-			<div class="col-md-8 content">
-				<div class="panel panel-black panel-content">
-				  <div class="panel-heading">
-					  <button class="btn btn-black btn-black-dropdown" type="button" data-toggle="dropdown">
-					    <span class="glyphicon glyphicon-th-list"></span>&nbsp;
-					    <span class="caret"></span>
-					  </button>
-					  <div class="dropdown-menu content-menu">
-							<div class="btn-group">
-							  <a href="javascript:;" class="btn active">
-									<span class="glyphicon glyphicon-file"></span><br>
-									资料
-							  </a>
-							  <a href="javascript:;" class="btn">
-							  	<span class="glyphicon glyphicon-calendar"></span><br>
-									聊天记录
-							  </a>
-							  <a href="javascript:;" class="btn">
-							  	<span class="glyphicon glyphicon-heart"></span><br>
-							  	关心
-							  </a>
-							</div>
- 						</div>
-				    <h3 class="panel-title">阿拉甲</h3>
-				    <button class="btn btn-black btn-black-close" type="button">
-				    	Close
-				    </button>
-				  </div>
-				  <div class="panel-body">
-				  	<div class="wrap">
-				  		<div class="msg-list">
-							<blockquote>
-					    	<img src="http://localhost:82/Uploads/20140924/542299330b7aa.jpg" alt="img">
-							  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-							  <footer>Someone famous in Source Title</footer>
-							</blockquote>
-							<blockquote class="blockquote-reverse">
-								<img src="http://localhost:82/Uploads/20140924/542299330b7aa.jpg" alt="img">
-							  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-							  <footer>Someone famous in Source Title</footer>
-							</blockquote>
-							</div>
-						</div>
-				  </div>
-				  <div class="panel-footer">
-				  	<form class="form-horizontal" role="form">
-						  <div class="form-group">
-						  	<button class="btn col-sm-1"><span class="glyphicon glyphicon-paperclip"></span></button>
-						    <div class="col-sm-10">
-						      <input type="text" class="form-control">
-						    </div>
-						    <button class="btn btn-primary col-sm-1">Send</button>
-						  </div>
-						</form>
-				  </div>
-				</div>
+			</div>
+    <h3 class="panel-title">{{user.nick}}</h3>
+    <a class="btn btn-black btn-black-close" type="button">
+    	Close
+    </a>
+  </div>
+  <div class="panel-body">
+  	<div class="wrap">
+  		<div class="msg-list">
+			<blockquote>
+	    	<img src="http://localhost:82/Uploads/20140924/542299330b7aa.jpg" alt="img">
+			  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+			  <footer>Someone famous in Source Title</footer>
+			</blockquote>
+			<blockquote class="blockquote-reverse">
+				<img src="http://localhost:82/Uploads/20140924/542299330b7aa.jpg" alt="img">
+			  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+			  <footer>Someone famous in Source Title</footer>
+			</blockquote>
 			</div>
 		</div>
-		<div class="row">
-			footer
-		</div>
-	</div>
-	
-	<script src="/Public/js/jquery-1.8.2.min.js"></script>
-	<script src="/Public/angular/angular.min.js"></script>
-	<script src="/Public/angular/angular-route.min.js"></script>
-	<script src="/Public/angular/json3.min.js"></script>
-	<script src="/Public/bootstrap/js/bootstrap.js"></script>
-	<script src="/Public/perfect_scrollbar/perfect-scrollbar-0.4.9.with-mousewheel.min.js"></script>
-
-	<script src="/Public/angular/controllers/controller.js"></script>
-	<script src="/Public/angular/directives/directive.js"></script>
-	<script src="/Public/angular/filters/filter.js"></script>
-	<script src="/Public/angular/app.js"></script>
-	<script>
-		$(function(){
-			$('.wrap').perfectScrollbar();
-		});
-	</script>
-
-</body>
-</html>
+  </div>
+  <div class="panel-footer">
+  	<form class="form-horizontal" role="form">
+		  <div class="form-group">
+		  	<a class="btn btn-default col-sm-1"><span class="glyphicon glyphicon-paperclip"></span></a>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control">
+		    </div>
+		    <a class="btn btn-primary col-sm-1">Send</a>
+		  </div>
+		</form>
+  </div>
+</div>
