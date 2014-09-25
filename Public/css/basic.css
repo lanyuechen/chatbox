@@ -1,66 +1,150 @@
-.container{
-	width: 1030px;
+body{
+	height: 100%;
+	background: url(/Public/img/0.jpg) no-repeat 0 0;
+	background-size: 100% 100%;
 }
-.sidebar{
-	height: 300px;
-	border: 1px solid #aaa;
+.container{
+	width: 1000px;
+}
+.main-content{
+	width: 28%;
+	padding-left: 0;
 }
 .content{
-	height: 300px;
-	border: 1px solid #aaa;
+	width: 72%;
 	padding: 0;
 }
+
+#wrap{
+  min-height: 100%;
+}
+
+/*黑色主题面板*/
 .panel-black{
 	border: none;
-	border-radius: 8px;
+	border-radius: 7px;
 	overflow: hidden;
-	box-shadow: 1px 1px 5px #6d7077;
+	box-shadow: 1px 1px 5px #000;
+	background: none;
 }
-.panel-black .panel-heading{
+.panel-black .panel-heading, .panel-black .panel-body, .panel-black .panel-footer{
+	border: none;
+}
+.panel-black .panel-body{
+	height: 450px;
+}
+.panel-black .panel-heading, .panel-black .panel-footer{
 	background: linear-gradient(top, #555,#222);
 	background: -moz-linear-gradient(top, #555,#222);
 	background: -webkit-linear-gradient(top, #555,#222);
 }
+.panel-black .panel-heading .panel-title{
+	text-align: center;
+	color: #fff;
+}
 .panel-black .panel-body{
-	padding: 0;
 	position: relative;
   overflow: hidden;
+  padding: 0;
 }
-.panel-black .panel-body .list-group{
+
+/*主面板*/
+.panel-main .panel-body{
+	background: #fff;
+}
+.panel-main .panel-footer{
+	padding: 0;
+}
+
+/*主面板-用户列表*/
+.user-list{
 	border-radius: 0;
 } 
-.panel-black .panel-body .list-group .list-group-item{
+.user-list .list-group-item{
 	color: #000;
 	border-radius: 0;
 	background: linear-gradient(top, #fff,#f1f1f1);
 	background: -moz-linear-gradient(top, #fff,#f1f1f1);
 	background: -webkit-linear-gradient(top, #fff,#f1f1f1);
 }
-.panel-black .panel-body .list-group .list-group-item img{
+.user-list .list-group-item img{
 	width: 40px;
 	height: 40px;
 	vertical-align: text-top;
 }
-.panel-black .panel-body .list-group .list-group-item .msg-latest{
+.user-list .list-group-item .msg-latest{
 	position: absolute;
 	left: 60px;
 	top: 35px;
 	font-size: 12px;
 	color: #aaa;
 }
-.panel-black .panel-heading .panel-title{
-	color: #fff;
-	text-align: center;
-}
-.panel-black .panel-footer{
-	padding: 0;
-	background: linear-gradient(top, #555,#222);
-	background: -moz-linear-gradient(top, #555,#222);
-	background: -webkit-linear-gradient(top, #555,#222);
-}
-.panel-black .panel-footer .btn-group .btn-black{
+
+/*主面板-导航栏*/
+.side-nav .btn{
 	border: none;
+	border-radius: 0;
 	border-left: 1px solid #555;
 	border-right: 1px solid #222;
 	color: #bdbebf;
+}
+.side-nav .btn:first-child{
+	border-left: none;
+}
+.side-nav .btn:last-child{
+	border-right: none;
+}
+.side-nav .btn.active{
+	box-shadow: inset 0 0 10px #000;
+	color: #2289cf;
+}
+
+/*内容面板*/
+.panel-content .panel-body{
+	background: rgba(0, 0, 0, 0.6);
+	/*opacity: 0.6;*/
+}
+.panel-content .panel-footer{
+	padding: 10px;
+}
+.panel-content .panel-footer .form-group{
+	margin: 0;
+}
+
+/*内容面板-聊天列表*/
+.msg-list{
+	margin: 15px;
+}
+.msg-list blockquote{
+	position: relative;
+	border: none;
+}
+.msg-list blockquote:not(.blockquote-reverse){
+	padding-left: 55px;
+	padding-right: 20px;
+}
+.msg-list blockquote.blockquote-reverse{
+	padding-left: 20px;
+	padding-right: 55px;
+}
+.msg-list blockquote p{
+	background: #fff;
+	border-radius: 5px;
+	padding: 5px;
+	box-shadow: 1px 1px 5px #000;
+	background: linear-gradient(top, #fff,#e1e1e1);
+	background: -moz-linear-gradient(top, #fff,#e1e1e1);
+	background: -webkit-linear-gradient(top, #fff,#e1e1e1);
+}
+.msg-list blockquote img{
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	top: 10px;
+}
+.msg-list blockquote:not(.blockquote-reverse) img{
+	left: 0;
+}
+.msg-list blockquote.blockquote-reverse img{
+	right: 0;
 }

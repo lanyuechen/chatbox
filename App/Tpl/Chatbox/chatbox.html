@@ -29,13 +29,13 @@
 				header
 			</div>
 			<div class="row">
-				<div class="col-md-4 sidebar">
-					<div class="panel panel-black">
+				<div class="col-md-4 main-content">
+					<div class="panel panel-black panel-main">
 					  <div class="panel-heading">
 					    <h3 class="panel-title">会话</h3>
 					  </div>
 					  <div class="panel-body">
-					    <div class="list-group">
+					    <div class="list-group user-list">
 					    	<a href="###" class="list-group-item">
 					    		<img src="http://localhost:82/Uploads/20140924/542299330b7aa.jpg" alt="img">
 					    		<span>阿拉甲</span>
@@ -49,20 +49,20 @@
 							</div>
 					  </div>
 					  <div class="panel-footer">
-							<div class="btn-group btn-group-justified">
-							  <a href="javascript:;" class="btn btn-black">
+							<div class="side-nav btn-group btn-group-justified">
+							  <a href="javascript:;" class="btn active">
 									<span class="glyphicon glyphicon-envelope"></span><br>
 									会话
 							  </a>
-							  <a href="javascript:;" class="btn btn-black">
+							  <a href="javascript:;" class="btn">
 							  	<span class="glyphicon glyphicon-user"></span><br>
 									联系人
 							  </a>
-							  <a href="javascript:;" class="btn btn-black">
+							  <a href="javascript:;" class="btn">
 							  	<span class="glyphicon glyphicon-heart"></span><br>
 							  	关心
 							  </a>
-							  <a href="javascript:;" class="btn btn-black">
+							  <a href="javascript:;" class="btn">
 									<span class="glyphicon glyphicon-cog"></span><br>
 							  	设置
 							  </a>
@@ -71,23 +71,33 @@
 					</div>
 				</div>
 				<div class="col-md-8 content">
-					<div class="panel panel-black">
+					<div class="panel panel-black panel-content">
 					  <div class="panel-heading">
 					    <h3 class="panel-title">阿拉甲</h3>
 					  </div>
 					  <div class="panel-body">
-					    hehe
-					  </div>
-					  <div class="panel-footer" style="padding:5px;">
-							<div class="input-group">
-								<div class="input-group-btn">
-							    <button class="btn btn-default" type="button">Go!</button>
-							  </div>
-							  <input type="text" class="form-control">
-							  <div class="input-group-btn">
-							    <button class="btn btn-default" type="button">Go!</button>
-							  </div>
+					  	<div class="msg-list">
+						    <blockquote>
+						    	<img src="http://localhost:82/Uploads/20140924/542299330b7aa.jpg" alt="img">
+								  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+								  <footer>Someone famous in Source Title</footer>
+								</blockquote>
+								<blockquote class="blockquote-reverse">
+									<img src="http://localhost:82/Uploads/20140924/542299330b7aa.jpg" alt="img">
+								  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+								  <footer>Someone famous in Source Title</footer>
+								</blockquote>
 							</div>
+					  </div>
+					  <div class="panel-footer">
+					  	<form class="form-horizontal" role="form">
+							  <div class="form-group">
+							    <div class="col-sm-11">
+							      <input type="text" class="form-control">
+							    </div>
+							    <button class="btn btn-primary col-sm-1">Send</button>
+							  </div>
+							</form>
 					  </div>
 					</div>
 				</div>
