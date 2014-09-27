@@ -5,12 +5,12 @@ var mCtrl = angular.module('mCtrl',[]);
 mCtrl.controller('RootCtrl', function ($rootScope, $http, $routeParams){
   $rootScope.users = [{
   	uid : '1',
-  	img : 'http://localhost:82/Uploads/20140924/542299330b7aa.jpg',
+  	img : '/Public/img/face.jpg',
   	nick : '阿拉甲',
   	latestMsg : '我还有最后一句话...'
   },{
   	uid : '2',
-  	img : 'http://localhost:82/Uploads/20140924/542299330b7aa.jpg',
+  	img : '/Public/img/face.jpg',
   	nick : '阿拉乙',
   	latestMsg : '我也还有最后一句话...'
   }];

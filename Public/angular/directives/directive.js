@@ -32,3 +32,40 @@ mDire.directive('draggable', function($document) {
     }
   }
 });
+
+mDire.directive('draggableY', function($document) {
+  var startY=0, y = 0;
+  return function(scope, element, attr) {
+    element.css({
+     position : 'relative'
+    });
+    element.bind('mousedown', function(event) {
+      startY = event.screenY;
+      element.css({
+       'transition-duration' : '0s',
+       '-moz-transition-duration' : '0s',
+       '-webkit-transition-duration' : '0s',
+      });
+      $document.bind('mousemove', mousemove);
+      $document.bind('mouseup', mouseup);
+    });
+
+    function mousemove(event) {
+      y = (event.screenY - startY) * 0.3;
+      element.css({
+        top: y + 'px'
+      });
+    }
+
+    function mouseup() {
+      $document.unbind('mousemove', mousemove);
+      $document.unbind('mouseup', mouseup);
+      element.css({
+        'transition-duration' : '0.3s',
+        '-moz-transition-duration' : '0.3s',
+        '-webkit-transition-duration' : '0.3s',
+        top : '0px'
+      });
+    }
+  }
+});

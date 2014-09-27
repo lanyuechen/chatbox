@@ -45,7 +45,6 @@ a:focus{
 	border: none;
 	border-radius: 7px;
 	overflow: hidden;
-	box-shadow: 1px 1px 5px #000;
 	background: none;
 }
 .panel-black .panel-heading{
@@ -55,12 +54,13 @@ a:focus{
 .panel-black .panel-body{
 	height: 100%;
 	padding: 0 0 100px 0;
+	overflow: hidden;
 }
 .panel-black .panel-body .wrap{
 	width: 100%;
 	height: 100%;
 	position: relative;
-  overflow: hidden;
+   overflow: hidden;
 }
 .panel-black .panel-footer{
 	height: 55px;
@@ -100,7 +100,10 @@ a:focus{
 }
 
 /*主面板*/
-.panel-main .panel-body{
+.panel-main{
+	box-shadow: 2px 2px 5px #000;
+}
+.panel-main .panel-body .wrap{
 	background: #fff;
 }
 .panel-main .panel-footer{
@@ -156,8 +159,11 @@ a:focus{
 }
 
 /*内容面板*/
-.panel-content .panel-body{
+.panel-content .panel-body .wrap{
 	background: rgba(0, 0, 0, 0.6);
+	transition: top 0.3s ease;
+    -moz-transition: top 0.3s ease;
+    -webkit-transition: top 0.3s ease;
 }
 .panel-content .panel-footer{
 	padding: 10px;
