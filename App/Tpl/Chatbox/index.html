@@ -44,7 +44,7 @@
 					<div class="panel panel-black panel-main">
 					  <div class="panel-heading" ng-switch on="main.panel">
 					    <h3 class="panel-title">{{main.title}}</h3>
-					    <a ng-switch-when="contact" class="btn btn-black btn-black-search" type="button"><span class="glyphicon glyphicon-search"></span></a>
+					    <a href="#/search" onfocus="this.blur();" ng-switch-when="contact" class="btn btn-black btn-black-search" type="button"><span class="glyphicon glyphicon-search"></span></a>
 					  </div>
 					  <div class="panel-body">
 					  	<div class="wrap" ng-include="main.tpl">

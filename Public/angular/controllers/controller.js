@@ -87,3 +87,7 @@ mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $http, $routeParams){
     });
   }
 });
+
+mCtrl.controller('SearchCtrl', function ($rootScope, $scope, $http, $routeParams){
+
+});

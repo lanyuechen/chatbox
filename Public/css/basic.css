@@ -102,6 +102,9 @@ a:focus{
 .panel-black .panel-heading .btn-black.btn-black-dropdown{
 	left: 15px;
 }
+.panel-black .panel-heading .btn-black.btn-black-back{
+	left: 15px;
+}
 .panel-black .panel-heading .btn-black.btn-black-close{
 	right: 15px;
 }

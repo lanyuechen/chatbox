@@ -1,0 +1,36 @@
+<!-- 搜索窗口 -->
+
+<div class="panel panel-black panel-content">
+  <div class="panel-heading">
+	  <a href="#" class="btn btn-black btn-black-back" onfocus="this.blur();" type="button">
+	    <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;返回
+	  </a>
+    <h3 class="panel-title">搜索</h3>
+    <a href="#" class="btn btn-black btn-black-close" onfocus="this.blur();" type="button">
+    	关闭
+    </a>
+  </div>
+  <div class="panel-body">
+  	<div class="wrap" draggable-y>
+		<div class="search-box">
+  			<input class="form-control" type="text" placeholder="搜索">
+  		</div>
+	</div>
+  </div>
+  <div class="panel-footer">
+  </div>
+</div>
+<style>
+.search-box{
+	background: linear-gradient(top, #ececec,#e0e0e0,#d6d6d6);
+	background: -moz-linear-gradient(top, #ececec,#e0e0e0,#d6d6d6);
+	background: -webkit-linear-gradient(top, #ececec,#e0e0e0,#d6d6d6);
+	border-bottom: 1px solid #a2a2a2;
+	padding: 10px;
+}
+.search-box input{
+	height: 30px;
+	border-radius: 15px;
+	box-shadow: inset -1px 1px 1px #888, -1px 1px 1px #eee;
+}
+</style>
