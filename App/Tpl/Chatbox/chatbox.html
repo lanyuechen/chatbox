@@ -22,7 +22,7 @@
 			  </a>
 			</div>
 			</div>
-    <h3 class="panel-title">{{user.nick}}</h3>
+    <h3 class="panel-title">{{he.nick}}</h3>
     <a href="#" class="btn btn-black btn-black-close" onfocus="this.blur();" type="button">
     	Close
     </a>
@@ -30,15 +30,10 @@
   <div class="panel-body">
   	<div class="wrap" draggable-y>
   		<div class="msg-list">
-			<blockquote>
-	    	<img src="/Public/img/face.jpg" alt="img">
-			  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-			  <footer>Someone famous in Source Title</footer>
-			</blockquote>
-			<blockquote class="blockquote-reverse">
-				<img src="/Public/img/face.jpg" alt="img">
-			  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-			  <footer>Someone famous in Source Title</footer>
+			<blockquote ng-repeat="msg in msgs" ng-class="{true:'blockquote-reverse'}[msg.reverse]">
+	    	<img ng-src="{{msg.img}}" alt="img">
+			  <p><span>{{msg.desc}}</span></p>
+			  <footer>{{msg.type}}</footer>
 			</blockquote>
 			</div>
 		</div>
@@ -46,11 +41,11 @@
   <div class="panel-footer">
   	<form class="form-horizontal" role="form">
 		  <div class="form-group">
-		  	<a class="btn btn-default col-sm-1"><span class="glyphicon glyphicon-paperclip"></span></a>
+		  	<a class="btn btn-default col-sm-1" ng-click="getMsg()"><span class="glyphicon glyphicon-paperclip"></span></a>
 		    <div class="col-sm-10">
-		      <input type="text" class="form-control">
+		      <input type="text" class="form-control" ng-model="msg.desc">
 		    </div>
-		    <a class="btn btn-primary col-sm-1">Send</a>
+		    <a class="btn btn-primary col-sm-1" ng-click="sendMsg()">Send</a>
 		  </div>
 		</form>
   </div>

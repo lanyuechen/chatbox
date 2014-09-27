@@ -29,7 +29,7 @@ class ApiAction extends Action {
 			return;
 		}
 
-		$res = $this->add_pre($user, 1);
+		$res = $this->add_pre($user, '1');
 
 		echo json_encode($res);
 	}

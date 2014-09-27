@@ -1,6 +1,6 @@
 <?php
 
-include_once ('app/Lib/baidu/Channel.class.php');
+include_once ('App/Lib/baidu/Channel.class.php');
 
 function msg_push($uid_from, $uid_to, $title, $desc, $type){
 	$user = getuser($uid_to);

@@ -37,6 +37,11 @@ a:focus{
 	color: #000;
 	text-shadow: 2px 0 2px #fff, -2px 0 2px #fff, 0 2px 2px #fff, 0 -2px 2px #fff;
 }
+.header span.blog-latest{
+	position: absolute;
+	left: 80px;
+	top: 25px;
+}
 
 /*黑色主题面板*/
 .panel-black{
@@ -223,7 +228,8 @@ a:focus{
 	padding-left: 20px;
 	padding-right: 55px;
 }
-.msg-list blockquote p{
+.msg-list blockquote p span{
+	display: inline-block;
 	background: #fff;
 	border-radius: 5px;
 	padding: 5px;
