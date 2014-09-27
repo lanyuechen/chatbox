@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<title>ChatBox</title>
 	<link rel="stylesheet" href="/Public/bootstrap/css/bootstrap.css" />
 	<!-- <link rel="stylesheet" href="/Public/bootstrap/css/theme.css"> -->
@@ -23,71 +23,72 @@
 	
 </head>
 <body ng-app="mApp" ng-controller="RootCtrl">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-4">
-				<div class="header">
-					<img ng-src="{{me.img}}" alt="img">
-					<span class="title">{{me.nick}}</span>
-					<span class="blog-latest">怪兽2号呼叫怪兽1号...</span><br>
-					<div class="btn-group">
-					  <a type="button" class="btn"><span class="glyphicon glyphicon-home"></span></a>
-					  <a type="button" class="btn"><span class="glyphicon glyphicon-film"></span></a>
-					  <a type="button" class="btn"><span class="glyphicon glyphicon-tags"></span></a>
+	<div id="wrap">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="header">
+						<img ng-src="{{me.img}}" alt="img">
+						<span class="title">{{me.nick}}</span>
+						<span class="blog-latest">怪兽2号呼叫怪兽1号...</span><br>
+						<div class="btn-group">
+						  <a type="button" class="btn"><span class="glyphicon glyphicon-home"></span></a>
+						  <a type="button" class="btn"><span class="glyphicon glyphicon-film"></span></a>
+						  <a type="button" class="btn"><span class="glyphicon glyphicon-tags"></span></a>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4 main-content" ng-controller="MainCtrl">
-				<div class="panel panel-black panel-main">
-				  <div class="panel-heading" ng-switch on="main.panel">
-				    <h3 class="panel-title">{{main.title}}</h3>
-				    <a ng-switch-when="contact" class="btn btn-black btn-black-search" type="button"><span class="glyphicon glyphicon-search"></span></a>
-				  </div>
-				  <div class="panel-body">
-				  	<div class="wrap" ng-include="main.tpl">
-							<!-- 次处加载主面板的各个模版 -->
-						</div>
-				  </div>
-				  <div class="panel-footer">
-						<div class="side-nav btn-group btn-group-justified">
-						  <a href="javascript:;" class="btn" ng-class="{user:'active'}[main.panel]" ng-click="main.panel='user';main.tpl='user.html';main.title='会话'">
-								<span class="glyphicon glyphicon-comment"></span><br>
-								会话
-						  </a>
-						  <a href="javascript:;" class="btn" ng-class="{contact:'active'}[main.panel]" ng-click="main.panel='contact';main.tpl='contact.html';main.title='联系人'">
-						  	<span class="glyphicon glyphicon-user"></span><br>
-								联系人
-						  </a>
-						  <a href="javascript:;" class="btn" ng-class="{care:'active'}[main.panel]" ng-click="main.panel='care';main.tpl='care.html';main.title='关心'">
-						  	<span class="glyphicon glyphicon-heart"></span><br>
-						  	关心
-						  </a>
-						  <a href="javascript:;" class="btn" ng-class="{config:'active'}[main.panel]" ng-click="main.panel='config';main.tpl='config.html';main.title='设置'">
-								<span class="glyphicon glyphicon-cog"></span><br>
-						  	设置
-						  </a>
-						</div>
-				  </div>
+			<div class="row">
+				<div class="col-md-4 main-content" ng-controller="MainCtrl">
+					<div class="panel panel-black panel-main">
+					  <div class="panel-heading" ng-switch on="main.panel">
+					    <h3 class="panel-title">{{main.title}}</h3>
+					    <a ng-switch-when="contact" class="btn btn-black btn-black-search" type="button"><span class="glyphicon glyphicon-search"></span></a>
+					  </div>
+					  <div class="panel-body">
+					  	<div class="wrap" ng-include="main.tpl">
+								<!-- 次处加载主面板的各个模版 -->
+							</div>
+					  </div>
+					  <div class="panel-footer">
+							<div class="side-nav btn-group btn-group-justified">
+							  <a href="javascript:;" class="btn" ng-class="{user:'active'}[main.panel]" ng-click="main.panel='user';main.tpl='user.html';main.title='会话'">
+									<span class="glyphicon glyphicon-comment"></span><br>
+									会话
+							  </a>
+							  <a href="javascript:;" class="btn" ng-class="{contact:'active'}[main.panel]" ng-click="main.panel='contact';main.tpl='contact.html';main.title='联系人'">
+							  	<span class="glyphicon glyphicon-user"></span><br>
+									联系人
+							  </a>
+							  <a href="javascript:;" class="btn" ng-class="{care:'active'}[main.panel]" ng-click="main.panel='care';main.tpl='care.html';main.title='关心'">
+							  	<span class="glyphicon glyphicon-heart"></span><br>
+							  	关心
+							  </a>
+							  <a href="javascript:;" class="btn" ng-class="{config:'active'}[main.panel]" ng-click="main.panel='config';main.tpl='config.html';main.title='设置'">
+									<span class="glyphicon glyphicon-cog"></span><br>
+							  	设置
+							  </a>
+							</div>
+					  </div>
+					</div>
+				</div>
+				<div class="col-md-8 col-sm-12 content" ng-view>
+					<!-- 加载内容模版 -->
 				</div>
 			</div>
-			<div class="col-md-8 content" ng-view>
-				<!-- 加载内容模版 -->
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<div class="footer">
-					<div class="btn-group">
-					  <a type="button" class="btn"><span class="glyphicon glyphicon-chevron-left"></span></a>
-					  <a type="button" class="btn"><span class="glyphicon glyphicon-chevron-right"></span></a>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="footer">
+						<div class="btn-group">
+						  <a type="button" class="btn"><span class="glyphicon glyphicon-chevron-left"></span></a>
+						  <a type="button" class="btn"><span class="glyphicon glyphicon-chevron-right"></span></a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
 	<script src="/Public/js/jquery-1.8.2.min.js"></script>
 	<script src="/Public/angular/angular.min.js"></script>
 	<script src="/Public/angular/angular-route.min.js"></script>

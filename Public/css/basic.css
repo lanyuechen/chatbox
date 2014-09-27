@@ -4,8 +4,10 @@ html, body{
 	background-size: 100% 100%;
 	/*overflow: hidden;*/
 }
-.container{
+#wrap{
 	width: 1000px;
+	min-width: 280px;
+	margin: 0 auto;
 }
 .main-content{
 	width: 28%;
@@ -249,4 +251,47 @@ a:focus{
 }
 .msg-list blockquote.blockquote-reverse img{
 	right: 0;
+}
+
+/*内容面板-工具栏*/
+.panel-content .toolbar{
+	position: relative;
+	padding: 0 73px;
+}
+.panel-content .toolbar .btn-media{
+	width: 58px;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.panel-content .toolbar .btn-send{
+	width: 58px;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+/*媒体查询*/
+@media screen and (max-width:1000px){
+	#wrap{
+		width: 100%;
+	}
+	.main-content{
+		width: 100%!important;
+		padding: 0;
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 3;
+	}
+	.content{
+		width: 100%!important;
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 4;
+	}
+	.panel-content .panel-body{
+		background: #fff;
+	}
 }

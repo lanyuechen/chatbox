@@ -63,6 +63,9 @@ mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $http, $routeParams){
       desc : $scope.msg.desc,
       type : $scope.msg.type
     };
+    if(param.desc == ''){
+      return;
+    }
     $http.post('/Chatbox/msg_s2c', param).success(function(data){
       console.log(data);
     });
