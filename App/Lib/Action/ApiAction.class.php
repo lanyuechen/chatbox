@@ -10,6 +10,32 @@ class ApiAction extends Action {
 	
 	protected $work_time_out = 416;	//	不在工作时间内
 
+	public function auth(){
+		if(!cookie('userAuth')){
+			echo json_encode(array('code'=>500, 'msg'=>'not login'));
+		}
+		$user = D('User')->where(array('auth'=>cookie('userAuth')))->find();
+		$user['uid'] = $user['_id'];
+		unset($user['_id']);
+		$msg['user'] = $user;
+
+		echo json_encode(array('code'=>200, 'msg'=>$msg));
+	}
+
+	public function login(){
+
+		$map['mobile'] = I('mobile');
+		$map['password'] = I('password');
+		if($user = D('User')->where($map)->find()){
+			cookie('userAuth', $user['auth']);
+			$user['uid'] = $user['_id'];
+			unset($user['_id']);
+			echo json_encode(array('code'=>200, 'msg'=>$user));
+		}else{
+			echo json_encode(array('code'=>500, 'msg'=>'login fail'));
+		}
+	}
+
 	//请求加入聊天列表
 	//请求参数：group
 	public function chat_beg(){

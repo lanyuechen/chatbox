@@ -5,10 +5,12 @@ class ChatboxAction extends Action {
 	public function user_chat_list(){
 		//获取聊天用户
 		$group = '1';
-		$users = D('Chat_ing')->where(array('group'=>$group))->select();
-
-		$users = array_values($users);
-		echo json_encode($users);
+		if($users = D('Chat_ing')->where(array('group'=>$group))->select()){
+			$users = array_values($users);
+			echo json_encode(array('code'=>200, 'msg'=>$users));
+		}else{
+			echo json_encode(array('code'=>500, 'msg'=>'user list is empty'));
+		}		
 	}
 
 	public function msg_s2c(){

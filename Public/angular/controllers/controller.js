@@ -3,34 +3,68 @@
 var mCtrl = angular.module('mCtrl',[]);
 
 //获取用户信息等公共信息
-mCtrl.controller('RootCtrl', function ($rootScope, $http, $routeParams){
-  $rootScope.me = {
-    uid : '1',
-    nick : 'nick1',
-    img : '/Public/img/face.jpg',
-    mobile : '18310091096'
+mCtrl.controller('RootCtrl', function ($rootScope, $http, $cookies){
+
+  $rootScope.auth = function(){
+    $http.get('/Api/auth').success(function(data){
+      if(data.code == 200){
+        $rootScope.meAuth = data.msg.user.auth;
+        $rootScope.me = data.msg.user;
+      }else{
+        $rootScope.me = {nick: '尚未登录', img: '/Public/img/face-default.png', sign : '请先登录...'};
+      }
+    });
   }
-  $rootScope.he = {
-    uid : '',
-    nick : '',
-    img : '',
-    mobile : ''
-  }
-  $rootScope.users = [];
+
+  $rootScope.auth();
 });
 
-mCtrl.controller('MainCtrl', function ($scope, $http, $routeParams){
-  $scope.main = {
-  	tpl : 'user.html',
-  	panel : 'user',
-  	title : '会话'
-  };
+mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies){
+
+  //主面板选择
+  $scope.disMainPanel = function(panel){
+    if(!$cookies.userAuth){
+      $scope.main = {tpl: 'login.html', panel: 'login', title: '登录'};
+      return;
+    }
+    if(panel == 'user'){
+      $scope.main = {tpl: 'user.html', panel: 'user', title: '会话'};
+    }else if(panel == 'contact'){
+      $scope.main = {tpl: 'contact.html', panel: 'contact', title: '联系人'};
+    }else if(panel == 'care'){
+      $scope.main = {tpl: 'care.html', panel: 'care', title: '关系'};
+    }else if(panel == 'config'){
+      $scope.main = {tpl: 'config.html', panel: 'config', title: '设置'};
+    }else{
+      $scope.main = {tpl: 'user.html', panel: 'user', title: '会话'};
+    }
+  }
+
+  $scope.disMainPanel();
+});
+
+mCtrl.controller('LoginCtrl', function ($rootScope, $scope, $http){
+  $scope.user = {mobile:'18310091091', password:'1'};
+  $scope.login = function(){
+    var mobile = $scope.user.mobile;
+    var password = $.md5($scope.user.password);
+    var param = '?mobile='+mobile+'&password='+password;
+    $http.get('/Api/login' + param).success(function(data){
+      // console.log(data);
+      if(data.code == 200){
+        $rootScope.meAuth = data.msg.auth;
+        $rootScope.me = data.msg;
+      }
+    });
+  }
 });
 
 mCtrl.controller('UserCtrl', function ($rootScope, $scope, $http, $routeParams){
   $http.get('/Chatbox/user_chat_list').success(function(data){
     console.log(data);
-    $rootScope.users = data;
+    if(data.code == 200){
+      $rootScope.users = data;
+    }
   });
 });
 

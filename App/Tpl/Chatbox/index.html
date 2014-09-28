@@ -30,7 +30,7 @@
 					<div class="header">
 						<img ng-src="{{me.img}}" alt="img">
 						<span class="title">{{me.nick}}</span>
-						<span class="blog-latest">怪兽2号呼叫怪兽1号...</span><br>
+						<span class="blog-latest">{{me.sign}}</span><br>
 						<div class="btn-group">
 						  <a type="button" class="btn"><span class="glyphicon glyphicon-home"></span></a>
 						  <a type="button" class="btn"><span class="glyphicon glyphicon-film"></span></a>
@@ -39,7 +39,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row container-body">
 				<div class="col-md-4 main-content" ng-controller="MainCtrl">
 					<div class="panel panel-black panel-main">
 					  <div class="panel-heading" ng-switch on="main.panel">
@@ -53,19 +53,19 @@
 					  </div>
 					  <div class="panel-footer">
 							<div class="side-nav btn-group btn-group-justified">
-							  <a href="javascript:;" class="btn" ng-class="{user:'active'}[main.panel]" ng-click="main.panel='user';main.tpl='user.html';main.title='会话'">
+							  <a href="javascript:;" class="btn" ng-class="{user:'active'}[main.panel]" ng-click="disMainPanel('user')">
 									<span class="glyphicon glyphicon-comment"></span><br>
 									会话
 							  </a>
-							  <a href="javascript:;" class="btn" ng-class="{contact:'active'}[main.panel]" ng-click="main.panel='contact';main.tpl='contact.html';main.title='联系人'">
+							  <a href="javascript:;" class="btn" ng-class="{contact:'active'}[main.panel]" ng-click="disMainPanel('contact')">
 							  	<span class="glyphicon glyphicon-user"></span><br>
 									联系人
 							  </a>
-							  <a href="javascript:;" class="btn" ng-class="{care:'active'}[main.panel]" ng-click="main.panel='care';main.tpl='care.html';main.title='关心'">
+							  <a href="javascript:;" class="btn" ng-class="{care:'active'}[main.panel]" ng-click="disMainPanel('care')">
 							  	<span class="glyphicon glyphicon-heart"></span><br>
 							  	关心
 							  </a>
-							  <a href="javascript:;" class="btn" ng-class="{config:'active'}[main.panel]" ng-click="main.panel='config';main.tpl='config.html';main.title='设置'">
+							  <a href="javascript:;" class="btn" ng-class="{config:'active'}[main.panel]" ng-click="disMainPanel('config')">
 									<span class="glyphicon glyphicon-cog"></span><br>
 							  	设置
 							  </a>
@@ -92,19 +92,16 @@
 	<script src="/Public/js/jquery-1.8.2.min.js"></script>
 	<script src="/Public/angular/angular.min.js"></script>
 	<script src="/Public/angular/angular-route.min.js"></script>
+	<script src="/Public/angular/angular-cookies.min.js"></script>
 	<script src="/Public/angular/json3.min.js"></script>
 	<script src="/Public/bootstrap/js/bootstrap.js"></script>
 	<script src="/Public/perfect_scrollbar/perfect-scrollbar-0.4.9.with-mousewheel.min.js"></script>
+	<script src="/Public/js/jquery.md5.js"></script>
 
 	<script src="/Public/angular/controllers/controller.js"></script>
 	<script src="/Public/angular/directives/directive.js"></script>
 	<script src="/Public/angular/filters/filter.js"></script>
 	<script src="/Public/angular/app.js"></script>
-	<script>
-		$(function(){
-			$('.wrap').perfectScrollbar();
-		});
-	</script>
 
 </body>
 </html>
