@@ -1,19 +1,22 @@
 'use strict';
 
-var mCtrl = angular.module('mCtrl',[]);
+var mCtrl = angular.module('mCtrl',['ngCookies']);
 
 //获取用户信息等公共信息
 mCtrl.controller('RootCtrl', function ($rootScope, $http, $cookies){
 
   $rootScope.auth = function(){
-    $http.get('/Api/auth').success(function(data){
-      if(data.code == 200){
-        $rootScope.meAuth = data.msg.user.auth;
-        $rootScope.me = data.msg.user;
-      }else{
-        $rootScope.me = {nick: '尚未登录', img: '/Public/img/face-default.png', sign : '请先登录...'};
-      }
-    });
+    if(!$cookies.userAuth){ 
+      $rootScope.me = {nick: '尚未登录', img: '/Public/img/face-default.png', sign : '请先登录...'};
+    }else{
+      $http.get('/Api/auth').success(function(data){
+        if(data.code == 200){
+          $rootScope.me = data.msg.user;
+        }else{
+          $rootScope.me = {nick: '尚未登录', img: '/Public/img/face-default.png', sign : '请先登录...'};
+        }
+      });
+    }
   }
 
   $rootScope.auth();
@@ -23,6 +26,7 @@ mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies){
 
   //主面板选择
   $scope.disMainPanel = function(panel){
+    console.log($cookies.userAuth);
     if(!$cookies.userAuth){
       $scope.main = {tpl: 'login.html', panel: 'login', title: '登录'};
       return;
@@ -32,7 +36,7 @@ mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies){
     }else if(panel == 'contact'){
       $scope.main = {tpl: 'contact.html', panel: 'contact', title: '联系人'};
     }else if(panel == 'care'){
-      $scope.main = {tpl: 'care.html', panel: 'care', title: '关系'};
+      $scope.main = {tpl: 'care.html', panel: 'care', title: '关心'};
     }else if(panel == 'config'){
       $scope.main = {tpl: 'config.html', panel: 'config', title: '设置'};
     }else{
@@ -40,30 +44,36 @@ mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies){
     }
   }
 
-  $scope.disMainPanel();
-});
-
-mCtrl.controller('LoginCtrl', function ($rootScope, $scope, $http){
   $scope.user = {mobile:'18310091091', password:'1'};
   $scope.login = function(){
     var mobile = $scope.user.mobile;
     var password = $.md5($scope.user.password);
     var param = '?mobile='+mobile+'&password='+password;
     $http.get('/Api/login' + param).success(function(data){
-      // console.log(data);
+      console.log(data);
       if(data.code == 200){
-        $rootScope.meAuth = data.msg.auth;
         $rootScope.me = data.msg;
+        $cookies.userAuth = data.msg.auth;
+        $scope.main = {tpl: 'user.html', panel: 'user', title: '会话'};
       }
     });
   }
+
+  $scope.logout = function(){
+    $cookies.userAuth = '';
+    $rootScope.me = {nick: '尚未登录', img: '/Public/img/face-default.png', sign : '请先登录...'};
+    $scope.main = {tpl: 'login.html', panel: 'login', title: '登录'};
+  }
+
+  $('.wrap').perfectScrollbar();
+  $scope.disMainPanel();
 });
 
 mCtrl.controller('UserCtrl', function ($rootScope, $scope, $http, $routeParams){
   $http.get('/Chatbox/user_chat_list').success(function(data){
     console.log(data);
     if(data.code == 200){
-      $rootScope.users = data;
+      $rootScope.users = data.msg;
     }
   });
 });

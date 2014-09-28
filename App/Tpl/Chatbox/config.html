@@ -1,44 +1,45 @@
 <!-- 设置窗口 -->
+<div>
+	<!-- 头像 -->
+	<ul class="list-group user-detail">
+		<li class="list-group-item detail-header">
+			<img ng-src="{{me.img}}" alt="img">
+			<span class="title">{{me.nick}}</span>
+			<span class="blog-latest">{{me.sign}}</span><br>
+		</li>
+	</ul>
 
-<!-- 头像 -->
-<ul class="list-group user-detail">
-	<li class="list-group-item detail-header">
-		<img src="/Public/img/face-default.png" alt="img">
-		<span class="title">{{me.nick}}</span>
-		<span class="blog-latest">怪兽2号呼叫怪兽1号...</span><br>
-	</li>
-</ul>
+	<!-- 消息设置 -->
+	<ul class="list-group user-detail">
+		<a href="javascript:;" class="list-group-item">
+			消息设置
+		</a>
+	</ul>
 
-<!-- 消息设置 -->
-<ul class="list-group user-detail">
-	<a href="javascript:;" class="list-group-item">
-		消息设置
-	</a>
-</ul>
+	<!-- Chtabox相关 -->
+	<ul class="list-group user-detail">
+		<a href="javascript:;" class="list-group-item">
+			Chatbox相关
+		</a>
+	</ul>
 
-<!-- Chtabox相关 -->
-<ul class="list-group user-detail">
-	<a href="javascript:;" class="list-group-item">
-		Chatbox相关
-	</a>
-</ul>
+	<!-- Chtabox相关-详细内容 -->
+	<ul class="list-group user-detail">
+		<li class="list-group-item detail-info">
+			<span>当前版本：</span>
+			<span>v1.0</span>
+		</li>
+		<a href="javascript:;" class="list-group-item">
+			服务条款
+		</a>
+		<a href="javascript:;" class="list-group-item">
+			帮助与反馈
+		</a>
+	</ul>
 
-<!-- Chtabox相关-详细内容 -->
-<ul class="list-group user-detail">
-	<li class="list-group-item detail-info">
-		<span>当前版本：</span>
-		<span>v1.0</span>
-	</li>
-	<a href="javascript:;" class="list-group-item">
-		服务条款
-	</a>
-	<a href="javascript:;" class="list-group-item">
-		帮助与反馈
-	</a>
-</ul>
-
-<ul class="list-group user-detail">
-	<a href="javascript:;" class="list-group-item btn btn-logout">
-		退出当前账号
-	</a>
-</ul>
+	<ul class="list-group user-detail">
+		<a ng-click="logout()" class="list-group-item btn btn-logout">
+			退出当前账号
+		</a>
+	</ul>
+</div>

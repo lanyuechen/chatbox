@@ -251,6 +251,7 @@ a:focus{
 .msg-list blockquote{
 	position: relative;
 	border: none;
+	margin-bottom: 0;
 }
 .msg-list blockquote:not(.blockquote-reverse){
 	padding-left: 55px;

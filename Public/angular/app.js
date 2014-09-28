@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('mApp', ['ngRoute','ngCookies','mCtrl','mDire','mFilter']);
+var app = angular.module('mApp', ['ngRoute','mCtrl','mDire','mFilter']);
 
 app.config(['$routeProvider', function ($routeProvider){
 	$routeProvider

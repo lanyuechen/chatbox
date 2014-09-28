@@ -13,6 +13,7 @@ class ApiAction extends Action {
 	public function auth(){
 		if(!cookie('userAuth')){
 			echo json_encode(array('code'=>500, 'msg'=>'not login'));
+			return;
 		}
 		$user = D('User')->where(array('auth'=>cookie('userAuth')))->find();
 		$user['uid'] = $user['_id'];
