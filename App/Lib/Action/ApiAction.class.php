@@ -15,10 +15,18 @@ class ApiAction extends Action {
 			echo json_encode(array('code'=>500, 'msg'=>'not login'));
 			return;
 		}
-		$user = D('User')->where(array('auth'=>cookie('userAuth')))->find();
-		$user['uid'] = $user['_id'];
-		unset($user['_id']);
-		$msg['user'] = $user;
+		$msg = array('me'=>array(), 'he'=>array());
+		if($me = D('User')->where(array('auth'=>cookie('userAuth')))->find()){
+			$me['uid'] = $me['_id'];
+			unset($me['_id']);
+			$msg['me'] = $me;
+		}
+		$heAuth = I('heAuth');
+		if($he = D('User')->where(array('auth'=>$heAuth))->find()){
+			$he['uid'] = $he['_id'];
+			unset($he['_id']);
+			$msg['he'] = $he;
+		}
 
 		echo json_encode(array('code'=>200, 'msg'=>$msg));
 	}
@@ -35,6 +43,11 @@ class ApiAction extends Action {
 		}else{
 			echo json_encode(array('code'=>500, 'msg'=>'login fail'));
 		}
+	}
+
+	public function logout(){
+		cookie('userAuth', null);
+		echo json_encode(array('code'=>200, 'msg'=>'logout'));
 	}
 
 	//请求加入聊天列表

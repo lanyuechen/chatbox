@@ -3,30 +3,29 @@
 var mCtrl = angular.module('mCtrl',['ngCookies']);
 
 //获取用户信息等公共信息
-mCtrl.controller('RootCtrl', function ($rootScope, $http, $cookies){
+mCtrl.controller('RootCtrl', function ($rootScope, $cookies, localStorage){
 
   $rootScope.auth = function(){
     if(!$cookies.userAuth){ 
       $rootScope.me = {nick: '尚未登录', img: '/Public/img/face-default.png', sign : '请先登录...'};
+      window.location.href = '#';
     }else{
-      $http.get('/Api/auth').success(function(data){
-        if(data.code == 200){
-          $rootScope.me = data.msg.user;
-        }else{
-          $rootScope.me = {nick: '尚未登录', img: '/Public/img/face-default.png', sign : '请先登录...'};
-        }
-      });
+      $rootScope.me = localStorage.get('me');
+      $rootScope.he = localStorage.get('he');
     }
   }
 
   $rootScope.auth();
 });
 
-mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies){
+mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies, localStorage){
 
-  //主面板选择
+  //默认用户
+  $scope.user = {mobile:'18310091091', password:'1'};
+
+  //主面板选择控制
   $scope.disMainPanel = function(panel){
-    console.log($cookies.userAuth);
+    // console.log($cookies.userAuth);
     if(!$cookies.userAuth){
       $scope.main = {tpl: 'login.html', panel: 'login', title: '登录'};
       return;
@@ -44,50 +43,61 @@ mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies){
     }
   }
 
-  $scope.user = {mobile:'18310091091', password:'1'};
+  //登录
   $scope.login = function(){
     var mobile = $scope.user.mobile;
     var password = $.md5($scope.user.password);
     var param = '?mobile='+mobile+'&password='+password;
     $http.get('/Api/login' + param).success(function(data){
-      console.log(data);
       if(data.code == 200){
+        // console.log(data.msg);
+        localStorage.set('me', data.msg);
         $rootScope.me = data.msg;
-        $cookies.userAuth = data.msg.auth;
         $scope.main = {tpl: 'user.html', panel: 'user', title: '会话'};
       }
     });
   }
 
+  //退出登录
   $scope.logout = function(){
-    $cookies.userAuth = '';
-    $rootScope.me = {nick: '尚未登录', img: '/Public/img/face-default.png', sign : '请先登录...'};
-    $scope.main = {tpl: 'login.html', panel: 'login', title: '登录'};
+    $http.get('/Api/logout').success(function(data){
+      if(data.code == 200){
+        $rootScope.me = {nick: '尚未登录', img: '/Public/img/face-default.png', sign : '请先登录...'};
+        $scope.main = {tpl: 'login.html', panel: 'login', title: '登录'};
+      }
+    });
   }
 
+  //滚动条
   $('.wrap').perfectScrollbar();
+  
+  //显示面板
   $scope.disMainPanel();
 });
 
-mCtrl.controller('UserCtrl', function ($rootScope, $scope, $http, $routeParams){
-  $http.get('/Chatbox/user_chat_list').success(function(data){
-    console.log(data);
-    if(data.code == 200){
-      $rootScope.users = data.msg;
-    }
-  });
+mCtrl.controller('UserCtrl', function ($rootScope, $scope, $http, $routeParams, localStorage){
+  if(!localStorage.get('users')){
+    $http.get('/Chatbox/user_chat_list').success(function(data){
+      if(data.code == 200){
+        localStorage.set('users', data.msg);
+      }
+    });
+  }
+  $rootScope.users = localStorage.get('users');
 });
 
-//获取聊天内容列表,收发消息
-mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $http, $routeParams){
-  var uid = $routeParams.uid || '';
-  var users = $rootScope.users;
+mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $http, $routeParams, $cookies, localStorage){
+  var uid = $routeParams.uid;
+  var users = localStorage.get('users');
   var user = null;
-  //获取当前用户
-  for(var i = 0; i < users.length; i++){
-    if(uid == users[i].uid){
-      $rootScope.he = users[i];
-      break;
+  if(users){
+    for(var i = 0; i < users.length; i++){
+      if(uid == users[i].uid){
+        $cookies.chatAuth = users[i].auth;
+        localStorage.set('he', users[i]);
+        $rootScope.he = users[i];
+        break;
+      }
     }
   }
 
@@ -111,13 +121,13 @@ mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $http, $routeParams){
       return;
     }
     $http.post('/Chatbox/msg_s2c', param).success(function(data){
-      console.log(data);
+      // console.log(data);
     });
   }
 
   $scope.getMsg = function(){
     $http.get('/Chatbox/msg?uid='+uid).success(function(data){
-      console.log(data);
+      // console.log(data);
       for(var i = 0; i < data.length; i++){
         if(data[i].uid_from == $rootScope.me.uid){
           data[i].reverse = true;
@@ -130,8 +140,4 @@ mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $http, $routeParams){
       $scope.msgs = data;
     });
   }
-});
-
-mCtrl.controller('SearchCtrl', function ($rootScope, $scope, $http, $routeParams){
-
 });
