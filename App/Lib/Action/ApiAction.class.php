@@ -4,9 +4,10 @@ class ApiAction extends Action {
 
 	protected $ok = 200;	// 成功
 	protected $err = 500; // 未知错误
-	protected $pre_repeat = array('code'=>413, 'msg'=>'add_pre:重复申请');
-	protected $is_chating = array('code'=>414, 'msg'=>'用户已在聊天列表');
-	protected $pre_no = array('code'=>415, 'msg'=>'add_ing:未发现该用户');
+	protected $no_auth = array('code'=>404, 'msg'=>'not login');
+	protected $pre_repeat = array('code'=>413, 'msg'=>'add_pre:beg repeat');
+	protected $is_chating = array('code'=>414, 'msg'=>'user is chating');
+	protected $pre_no = array('code'=>415, 'msg'=>'add_ing:not found');
 	
 	protected $work_time_out = 416;	//	不在工作时间内
 
@@ -54,7 +55,12 @@ class ApiAction extends Action {
 	//请求参数：group
 	public function chat_beg(){
 
-		$user = D('User')->find();
+		$auth = cookie('userAuth');
+		$user = D('User')->where(array('auth'=>$auth))->find();
+		if(!$user){
+			echo json_encode($this->no_auth);
+			return;
+		}
 
 		$uid = $user['_id'];
 
@@ -69,7 +75,7 @@ class ApiAction extends Action {
 			return;
 		}
 
-		$res = $this->add_pre($user, '1');
+		$res = $this->add_pre($user, '542776a98072ea16c4353f8f');
 
 		echo json_encode($res);
 	}
@@ -77,9 +83,16 @@ class ApiAction extends Action {
 	//用户确认
 	public function chat_confirm(){
 
-		$user = D('User')->find();
+		$auth = cookie('userAuth');
+		$user = D('User')->where(array('auth'=>$auth))->find();
+		if(!$user){
+			echo json_encode($this->no_auth);
+			return;
+		}
 
-		$res = $this->add_ing($user['_id']);
+		$uid = $user['_id'];
+
+		$res = $this->add_ing($uid);
 
 		echo json_encode($res);
 	}
@@ -87,27 +100,37 @@ class ApiAction extends Action {
 	//用户退出聊天
 	public function chat_quit(){
 
-		$user = D('User')->find();
+		$auth = cookie('userAuth');
+		$user = D('User')->where(array('auth'=>$auth))->find();
+		if(!$user){
+			echo json_encode($this->no_auth);
+			return;
+		}
 
-		$res = $this->quit($user['_id']);
+		$uid = $user['_id'];
+
+		$res = $this->quit($uid);
 
 		echo json_encode($res);
 	}
 
 	public function msg_c2s(){
 
-		$user = D('User')->find();
+		$auth = cookie('userAuth');
+		$user = D('User')->where(array('auth'=>$auth))->find();
+		if(!$user){
+			echo json_encode($this->no_auth);
+			return;
+		}
 
-		$user = D('Chat_ing')->where(array('uid'=>$user['_id']))->find();
-
-		if(!$user['uid']){
+		if(!$user['_id']){
 			$res['code'] = 500;
 			$res['msg'] = 'msg_c2s:参数错误';
 			echo json_encode($res);
 			return;
 		}
 
-		$user = getuser($user['uid']);
+		$user = getuser($user['_id']);
 
 		$title = I('title');
 		$desc = I('desc');

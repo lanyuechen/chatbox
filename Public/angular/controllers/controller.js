@@ -25,7 +25,6 @@ mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies, loca
 
   //主面板选择控制
   $scope.disMainPanel = function(panel){
-    // console.log($cookies.userAuth);
     if(!$cookies.userAuth){
       $scope.main = {tpl: 'login.html', panel: 'login', title: '登录'};
       return;
@@ -64,6 +63,7 @@ mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies, loca
       if(data.code == 200){
         $rootScope.me = {nick: '尚未登录', img: '/Public/img/face-default.png', sign : '请先登录...'};
         $scope.main = {tpl: 'login.html', panel: 'login', title: '登录'};
+        window.location.href = '#';
       }
     });
   }
@@ -76,20 +76,21 @@ mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies, loca
 });
 
 mCtrl.controller('UserCtrl', function ($rootScope, $scope, $http, $routeParams, localStorage){
-  if(!localStorage.get('users')){
+  var users = localStorage.get('users');
+  if(users){
+    $rootScope.users = localStorage.get('users');
+  }else{
     $http.get('/Chatbox/user_chat_list').success(function(data){
       if(data.code == 200){
         localStorage.set('users', data.msg);
       }
     });
   }
-  $rootScope.users = localStorage.get('users');
 });
 
 mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $http, $routeParams, $cookies, localStorage){
   var uid = $routeParams.uid;
   var users = localStorage.get('users');
-  var user = null;
   if(users){
     for(var i = 0; i < users.length; i++){
       if(uid == users[i].uid){
@@ -108,6 +109,11 @@ mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $http, $routeParams, 
   };
 
   $('.wrap').perfectScrollbar();
+
+  $scope.closeChat = function(){
+    localStorage.rm('he');
+    window.location.href = '#';
+  }
 
   $scope.sendMsg = function(){
     var param = {

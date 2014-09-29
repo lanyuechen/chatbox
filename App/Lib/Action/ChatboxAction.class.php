@@ -4,7 +4,7 @@ class ChatboxAction extends Action {
 
 	public function user_chat_list(){
 		//获取聊天用户
-		$group = '1';
+		$group = '542776a98072ea16c4353f8f';
 		if($users = D('Chat_ing')->where(array('group'=>$group))->select()){
 			$users = array_values($users);
 			echo json_encode(array('code'=>200, 'msg'=>$users));
@@ -25,7 +25,7 @@ class ChatboxAction extends Action {
 		$uid = I('uid');
 
 		$user = getuser($uid);
-		$map['uid_to|uid_from'] = '1';
+		$map['uid_to|uid_from'] = '542776a98072ea16c4353f8f';
 		// $map['group'] = $user['group'];
 		$msgs = D('Msg')->where($map)->select();
 
