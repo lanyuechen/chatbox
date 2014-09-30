@@ -1,6 +1,6 @@
 'use strict';
 
-var mCtrl = angular.module('mCtrl',['ngCookies']);
+var mCtrl = angular.module('mCtrl',[]);
 
 //获取用户信息等公共信息
 mCtrl.controller('RootCtrl', function ($rootScope, $cookies, localStorage){
@@ -76,19 +76,20 @@ mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies, loca
 });
 
 mCtrl.controller('UserCtrl', function ($rootScope, $scope, $http, $routeParams, localStorage){
-  var users = localStorage.get('users');
+  var users = false;//localStorage.get('users');
   if(users){
     $rootScope.users = localStorage.get('users');
   }else{
-    $http.get('/Chatbox/user_chat_list').success(function(data){
+    $http.get('/Api/user_chat_list').success(function(data){
       if(data.code == 200){
         localStorage.set('users', data.msg);
+        $rootScope.users = data.msg;
       }
     });
   }
 });
 
-mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $http, $routeParams, $cookies, localStorage){
+mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $interval, $http, $routeParams, $cookies, localStorage){
   var uid = $routeParams.uid;
   var users = localStorage.get('users');
   if(users){
@@ -115,9 +116,11 @@ mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $http, $routeParams, 
     window.location.href = '#';
   }
 
+  $scope.msgs = {};
+
   $scope.sendMsg = function(){
     var param = {
-      uid_from : $rootScope.he.group,
+      uid_from : $rootScope.me.uid,
       uid_to : $rootScope.he.uid,
       title : $scope.msg.title,
       desc : $scope.msg.desc,
@@ -127,23 +130,43 @@ mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $http, $routeParams, 
       return;
     }
     $http.post('/Chatbox/msg_s2c', param).success(function(data){
-      // console.log(data);
+      if(data){
+        var tmp = $scope.msgs[$rootScope.he.uid] || [];
+        param.reverse = true;
+        param.img = $rootScope.me.img;
+        $scope.msgs[$rootScope.he.uid] = tmp.concat(param);
+      }
     });
   }
 
+  //聊天内容更新自动滚动视口到最底端
+  $scope.$on('ngRepeatFinished', function(){
+    var wrap = $(".panel-content .wrap");
+    wrap.scrollTop(wrap.prop('scrollHeight'));
+  });
+
   $scope.getMsg = function(){
-    $http.get('/Chatbox/msg?uid='+uid).success(function(data){
-      // console.log(data);
-      for(var i = 0; i < data.length; i++){
-        if(data[i].uid_from == $rootScope.me.uid){
-          data[i].reverse = true;
-          data[i].img = $rootScope.me.img;
-        }else{
-          data[i].reverse = false;
-          data[i].img = $rootScope.he.img;
+    // $interval(function(){
+      var uid_to = $rootScope.he.uid;
+      var uid_from = $rootScope.me.uid;
+      $http.get('/Chatbox/msg_new?uid_to='+uid_to+'&uid_from='+uid_from).success(function(data){
+        // console.log(data);
+        if(data.code == 200){
+          data = data.msg;
+          for(var i = 0; i < data.length; i++){
+            if(data[i].uid_from == $rootScope.me.uid){
+              data[i].reverse = true;
+              data[i].img = $rootScope.me.img;
+            }else{
+              data[i].reverse = false;
+              data[i].img = $rootScope.he.img;
+            }
+          }
+          console.log(data);
+          var tmp = $scope.msgs[uid_to] || [];
+          $scope.msgs[uid_to] = tmp.concat(data);
         }
-      }
-      $scope.msgs = data;
-    });
+      });
+    // },2000);
   }
 });

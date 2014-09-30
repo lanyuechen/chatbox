@@ -51,6 +51,24 @@ class ApiAction extends Action {
 		echo json_encode(array('code'=>200, 'msg'=>'logout'));
 	}
 
+	public function user_chat_list(){
+
+		$auth = cookie('userAuth');
+		$user = D('User')->where(array('auth'=>$auth))->find();
+		if(!$user){
+			echo json_encode($this->no_auth);
+			return;
+		}
+
+		$map['uid'] = array('neq', $user['_id']);
+		if($users = D('Chat_ing')->where($map)->select()){
+			$users = array_values($users);
+			echo json_encode(array('code'=>200, 'msg'=>$users));
+		}else{
+			echo json_encode(array('code'=>500, 'msg'=>'user list is empty'));
+		}		
+	}
+
 	//请求加入聊天列表
 	//请求参数：group
 	public function chat_beg(){

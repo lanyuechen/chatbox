@@ -30,7 +30,7 @@
   <div class="panel-body">
   	<div class="wrap" draggable-y>
   		<div class="msg-list">
-			<blockquote ng-repeat="msg in msgs" ng-class="{true:'blockquote-reverse'}[msg.reverse]">
+			<blockquote ng-repeat="msg in msgs[he.uid]" ng-class="{true:'blockquote-reverse'}[msg.reverse]" on-render-finish>
 	    	<img ng-src="{{msg.img}}" alt="img">
 			  <p><span>{{msg.desc}}</span></p>
 			  <footer>{{msg.type}}</footer>
