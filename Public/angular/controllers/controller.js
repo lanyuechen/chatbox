@@ -93,12 +93,21 @@ mCtrl.controller('UserCtrl', function ($rootScope, $scope, $http, $routeParams, 
   }
 });
 
+mCtrl.controller('ContactCtrl', function ($scope, $http, $cookies, localStorage){
+  $http.get(server + '/Api/userlist?auth=' + $cookies.userAuth).success(function(data){
+    if(data.code == 200){
+      $scope.users = data.msg;
+      localStorage.set('users', data.msg);
+    }
+  });
+});
+
 mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $interval, $http, $routeParams, $cookies, localStorage){
   var uid = $routeParams.uid;
   var users = localStorage.get('users');
   if(users){
     for(var i = 0; i < users.length; i++){
-      if(uid == users[i].uid){
+      if(uid == users[i]._id || uid == users[i].uid){
         $cookies.chatAuth = users[i].auth;
         localStorage.set('he', users[i]);
         $rootScope.he = users[i];
@@ -185,4 +194,8 @@ mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $interval, $http, $ro
     var wrap = $(".panel-content .wrap");
     wrap.scrollTop(wrap.prop('scrollHeight'));
   });
+});
+
+mCtrl.controller('SearchCtrl', function ($scope, $http, $cookies){
+
 });

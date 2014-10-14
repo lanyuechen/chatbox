@@ -1,4 +1,4 @@
-<div class="contact">
+<div class="contact" ng-controller="ContactCtrl">
 	<div class="btn-group btn-group-justified contact-nav">
 	  <a href="javascript:;" class="btn btn-default">好友</a>
 	  <a href="javascript:;" class="btn btn-default">群</a>
@@ -19,17 +19,12 @@
 			
 			 <!-- 用户 -->
 	        <div class="list-group user-list">
-				<a ng-href="#/chatbox/1" class="list-group-item">
-					<img src="/Public/img/face-default.png" alt="img">
-					<span>怪兽3号</span>
-					<span class="msg-latest">奥特曼打小怪兽...</span>
-				</a>
-				<a ng-href="#/chatbox/1" class="list-group-item">
-					<img src="/Public/img/face-default.png" alt="img">
-					<span>怪兽4号</span>
-					<span class="msg-latest">奥特曼继续打小怪兽...</span>
-				</a>
-			</div>
+						<a ng-href="#/chatbox/{{user._id}}" class="list-group-item" ng-repeat="user in users">
+							<img ng-src="{{user.img}}" alt="img">
+							<span>{{user.nick}}</span>
+							<span class="msg-latest">{{user.sign}}</span>
+						</a>
+					</div>
 
 	      </div>
 	    </div>
