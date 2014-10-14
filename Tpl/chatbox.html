@@ -1,0 +1,48 @@
+<!-- 聊天窗口 -->
+
+<div class="panel panel-black panel-content">
+  <div class="panel-heading">
+	  <a class="btn btn-black btn-black-dropdown" type="button" data-toggle="dropdown">
+	    <span class="glyphicon glyphicon-th-list"></span>&nbsp;
+	    <span class="caret"></span>
+	  </a>
+	  <div class="dropdown-menu content-menu">
+			<div class="btn-group">
+			  <a href="#/detail" class="btn">
+					<span class="glyphicon glyphicon-file"></span><br>
+					资料
+			  </a>
+			  <a href="javascript:;" class="btn">
+			  	<span class="glyphicon glyphicon-calendar"></span><br>
+					聊天记录
+			  </a>
+			  <a href="javascript:;" class="btn">
+			  	<span class="glyphicon glyphicon-heart"></span><br>
+			  	关心
+			  </a>
+			</div>
+			</div>
+    <h3 class="panel-title">{{he.nick}}</h3>
+    <a href="javascript:;" ng-click="closeChat()" class="btn btn-black btn-black-close" onfocus="this.blur();" type="button">
+    	关闭
+    </a>
+  </div>
+  <div class="panel-body">
+  	<div class="wrap" draggable-y>
+  		<div class="msg-list">
+			<blockquote ng-repeat="msg in msgs[he.uid]" ng-class="{true:'blockquote-reverse'}[msg.reverse]" on-render-finish>
+	    	<img ng-src="{{msg.img}}" alt="img">
+			  <p><span>{{msg.desc}}</span></p>
+			  <footer>{{msg.type}}</footer>
+			</blockquote>
+			</div>
+		</div>
+  </div>
+  <div class="panel-footer">
+  	<div class="toolbar">
+		<a class="btn btn-media"><span class="glyphicon glyphicon-th-large"></span></a>
+		<input type="text" class="form-control" ng-model="msg.desc">
+		<a class="btn btn-primary btn-send" ng-click="sendMsg()">发送</a>
+  	</div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 'use strict';
 
 var mCtrl = angular.module('mCtrl',[]);
+var server = "http://localhost";
 
 //获取用户信息等公共信息
 mCtrl.controller('RootCtrl', function ($rootScope, $cookies, localStorage){
@@ -26,19 +27,19 @@ mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies, loca
   //主面板选择控制
   $scope.disMainPanel = function(panel){
     if(!$cookies.userAuth){
-      $scope.main = {tpl: 'login.html', panel: 'login', title: '登录'};
+      $scope.main = {tpl: '/Tpl/login.html', panel: 'login', title: '登录'};
       return;
     }
     if(panel == 'user'){
-      $scope.main = {tpl: 'user.html', panel: 'user', title: '会话'};
+      $scope.main = {tpl: '/Tpl/user.html', panel: 'user', title: '会话'};
     }else if(panel == 'contact'){
-      $scope.main = {tpl: 'contact.html', panel: 'contact', title: '联系人'};
+      $scope.main = {tpl: '/Tpl/contact.html', panel: 'contact', title: '联系人'};
     }else if(panel == 'care'){
-      $scope.main = {tpl: 'care.html', panel: 'care', title: '关心'};
+      $scope.main = {tpl: '/Tpl/care.html', panel: 'care', title: '关心'};
     }else if(panel == 'config'){
-      $scope.main = {tpl: 'config.html', panel: 'config', title: '设置'};
+      $scope.main = {tpl: '/Tpl/config.html', panel: 'config', title: '设置'};
     }else{
-      $scope.main = {tpl: 'user.html', panel: 'user', title: '会话'};
+      $scope.main = {tpl: '/Tpl/user.html', panel: 'user', title: '会话'};
     }
   }
 
@@ -47,25 +48,27 @@ mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies, loca
     var mobile = $scope.user.mobile;
     var password = $.md5($scope.user.password);
     var param = '?mobile='+mobile+'&password='+password;
-    $http.get('/Api/login' + param).success(function(data){
+    $http.get(server + '/Api/login' + param).success(function(data){
       if(data.code == 200){
-        // console.log(data.msg);
+        console.log(data.msg);
+        $cookies.userAuth = data.msg.auth;
         localStorage.set('me', data.msg);
         $rootScope.me = data.msg;
-        $scope.main = {tpl: 'user.html', panel: 'user', title: '会话'};
+        $scope.main = {tpl: '/Tpl/user.html', panel: 'user', title: '会话'};
       }
     });
   }
 
   //退出登录
   $scope.logout = function(){
-    $http.get('/Api/logout').success(function(data){
-      if(data.code == 200){
+    // $http.get(server + '/Api/logout').success(function(data){
+    //   if(data.code == 200){
+        $cookies.userAuth = "";
         $rootScope.me = {nick: '尚未登录', img: '/Public/img/face-default.png', sign : '请先登录...'};
-        $scope.main = {tpl: 'login.html', panel: 'login', title: '登录'};
+        $scope.main = {tpl: '/Tpl/login.html', panel: 'login', title: '登录'};
         window.location.href = '#';
-      }
-    });
+    //   }
+    // });
   }
 
   //滚动条
@@ -75,12 +78,13 @@ mCtrl.controller('MainCtrl', function ($rootScope, $scope, $http, $cookies, loca
   $scope.disMainPanel();
 });
 
-mCtrl.controller('UserCtrl', function ($rootScope, $scope, $http, $routeParams, localStorage){
+mCtrl.controller('UserCtrl', function ($rootScope, $scope, $http, $routeParams, $cookies, localStorage){
   var users = false;//localStorage.get('users');
   if(users){
     $rootScope.users = localStorage.get('users');
   }else{
-    $http.get('/Api/user_chat_list').success(function(data){
+    var auth = $cookies.userAuth
+    $http.get(server + '/Api/user_chat_list?auth='+auth).success(function(data){
       if(data.code == 200){
         localStorage.set('users', data.msg);
         $rootScope.users = data.msg;
@@ -109,34 +113,71 @@ mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $interval, $http, $ro
     type : 104
   };
 
+  var websocket = null;
+
   $('.wrap').perfectScrollbar();
 
   $scope.closeChat = function(){
+    websocket.close(); 
     localStorage.rm('he');
     window.location.href = '#';
   }
 
   $scope.msgs = {};
 
-  $scope.sendMsg = function(){
-    var param = {
-      uid_from : $rootScope.me.uid,
-      uid_to : $rootScope.he.uid,
-      title : $scope.msg.title,
-      desc : $scope.msg.desc,
-      type : $scope.msg.type
-    };
-    if(param.desc == ''){
-      return;
-    }
-    $http.post('/Chatbox/msg_s2c', param).success(function(data){
-      if(data){
+  $scope.sock = function(){
+    console.log("[start]");
+    var wsUri ="ws://localhost/socket"; 
+    websocket = new WebSocket(wsUri); 
+    websocket.onopen = function(evt) {
+      console.log("[connected]");
+    }; 
+    websocket.onclose = function(evt) {
+      console.log("[disconnected]");
+    }; 
+    websocket.onmessage = function(evt) {
+      console.log('[response]'+ evt.data); 
+      var res = eval('('+evt.data+')');
+      if($rootScope.me.uid == res.uid_to){
+        if(res.uid_from == $rootScope.me.uid){
+          res.reverse = true;
+          res.img = $rootScope.me.img;
+        }else{
+          res.reverse = false;
+          res.img = $rootScope.he.img;
+        }
         var tmp = $scope.msgs[$rootScope.he.uid] || [];
-        param.reverse = true;
-        param.img = $rootScope.me.img;
-        $scope.msgs[$rootScope.he.uid] = tmp.concat(param);
+        console.log(tmp)
+        $scope.msgs[$rootScope.he.uid] = tmp.concat(res);
+        $scope.$digest();
       }
-    });
+    }; 
+    websocket.onerror = function(evt) {
+      console.log('[error]'+ evt.data); 
+      websocket.close(); 
+    }; 
+  }
+
+  $scope.sock();
+
+  $scope.sendMsg = function(){
+    if(!websocket){
+      $scope.sock();
+    }
+    if(websocket.readyState == 1){
+      var tmp = $scope.msgs[$rootScope.he.uid] || [];
+      var param = {
+        uid_from : $rootScope.me.uid,
+        uid_to : $rootScope.he.uid,
+        title : $scope.msg.title,
+        desc : $scope.msg.desc,
+        type : $scope.msg.type
+      };
+      websocket.send(JSON.stringify(param));
+      param.reverse = true;
+      param.img = $rootScope.me.img;
+      $scope.msgs[$rootScope.he.uid] = tmp.concat(param);
+    }
   }
 
   //聊天内容更新自动滚动视口到最底端
@@ -144,29 +185,4 @@ mCtrl.controller('ChatCtrl', function ($rootScope, $scope, $interval, $http, $ro
     var wrap = $(".panel-content .wrap");
     wrap.scrollTop(wrap.prop('scrollHeight'));
   });
-
-  $scope.getMsg = function(){
-    // $interval(function(){
-      var uid_to = $rootScope.he.uid;
-      var uid_from = $rootScope.me.uid;
-      $http.get('/Chatbox/msg_new?uid_to='+uid_to+'&uid_from='+uid_from).success(function(data){
-        // console.log(data);
-        if(data.code == 200){
-          data = data.msg;
-          for(var i = 0; i < data.length; i++){
-            if(data[i].uid_from == $rootScope.me.uid){
-              data[i].reverse = true;
-              data[i].img = $rootScope.me.img;
-            }else{
-              data[i].reverse = false;
-              data[i].img = $rootScope.he.img;
-            }
-          }
-          console.log(data);
-          var tmp = $scope.msgs[uid_to] || [];
-          $scope.msgs[uid_to] = tmp.concat(data);
-        }
-      });
-    // },2000);
-  }
 });
